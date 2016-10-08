@@ -73,7 +73,7 @@ function getCoordinates(location) {
 		return res.json();
 	}).then(function(json) {
 		var results = json.results;
-		// console.log(json)
+		console.log(results)
 		return [
 			results[0].geometry.location.lat,
 			results[0].geometry.location.lng
