@@ -43,8 +43,6 @@ function getCoordinates(location) {
 	});	
 }
 
-// getCoordinates('')
-
 function postResults(results){
 	return new Promise(function(resolve, reject){
 		var options = { 
@@ -63,7 +61,6 @@ function postResults(results){
 
 		request(options, function (error, response, body) {
 			if (error) return reject(error);
-			console.log(body);
 			resolve(body);
 		});
 	});
@@ -75,7 +72,7 @@ Promise.all([
 	])
 .then(postResults)
 .then(function(result){
-	console.log('data posted! response:', result);
+	console.log('data posted! response:', JSON.parse(result).matching);
 })
 .catch(console.log);
 

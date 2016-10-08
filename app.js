@@ -112,6 +112,9 @@ Promise.all([
 .catch(console.log);
 
 
+function getPeople(text) {
+	sendTextMessage('received text')
+}
 
 
 
@@ -373,12 +376,9 @@ function receivedMessage(event) {
       	sendTextMessage(senderID, 'Hello')
       	break;
 
-      case 'Get me a friend from Dallas to MHacks':
-      	sendTextMessage(senderID, 'Getting you a friend!')
-      	break;
-
       default:
-        sendTextMessage(senderID, messageText);
+        getPeople(messageText)
+        break;
     }
   } else if (messageAttachments) {
     sendTextMessage(senderID, "Message with attachment received");
