@@ -18,8 +18,6 @@ const
   https = require('https'),  
   request = require('request');
 
-var request = require('request');
-
 var app = express();
 app.set('port', process.env.PORT || 5000);
 app.set('view engine', 'ejs');
