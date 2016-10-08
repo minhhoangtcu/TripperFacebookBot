@@ -56,6 +56,68 @@ if (!(APP_SECRET && VALIDATION_TOKEN && PAGE_ACCESS_TOKEN && SERVER_URL)) {
   process.exit(1);
 }
 
+
+/*
+ * Custom requests for another server
+ *
+*/
+function getCoordinates(location) {
+	var query = 'https://maps.googleapis.com/maps/api/place/textsearch/json?query=' + location + '&key=AIzaSyAGgyJhfn84IWt7Dxhjn4F3PQaW_9KrAwg'
+	return fetch(query)
+	.then(function(res) {
+		return res.json();
+	}).then(function(json) {
+		var results = json.results;
+		// getting stuff
+		// why console.log(json) generate weird stuff
+		return [
+			results[0].geometry.location.lat,
+			results[0].geometry.location.lng
+		];
+	});	
+}
+
+function postResults(results){
+	return new Promise(function(resolve, reject){
+		var options = { 
+			method: 'POST',
+			url: 'http://66.228.42.210:4994/directions/',
+			headers: {
+				'postman-token': '6b53859c-8aac-461f-612a-3f96b7c30243',
+				'cache-control': 'no-cache',
+				'content-type': 'application/x-www-form-urlencoded'
+			},
+			form: {
+				start: results[0],
+				end: results[1]
+			} 
+		};
+
+		request(options, function (error, response, body) {
+			if (error) return reject(error);
+			console.log(body);
+			resolve(body);
+		});
+	});
+}
+
+Promise.all([
+	getCoordinates('masonic temple detroit'),
+	getCoordinates('cass technical high school detroit')
+	])
+.then(postResults)
+.then(function(result){
+	console.log('data posted! response:', result);
+})
+.catch(console.log);
+
+
+
+
+
+
+
+
 /*
  * Use your own validation token. Check that the token used in the Webhook 
  * setup is the same token used here.

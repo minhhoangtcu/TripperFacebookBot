@@ -1,56 +1,86 @@
 var fetch = require('node-fetch');
 var express = require('express');
+var Promise = require('bluebird');
 var request = require('request');
 
 var app = express();
 
 // Mark: Request GET coordinates from Google Map
 
-function getCoordinates(location) {
-	var query = 'https://maps.googleapis.com/maps/api/place/textsearch/json?query=' + location + '&key=AIzaSyAGgyJhfn84IWt7Dxhjn4F3PQaW_9KrAwg'
-	request(query, callback);
-}
-
-function callback(error, response, body) {
-  	if (!error && response.statusCode == 200) {
-    	var info = JSON.parse(body);
-    	console.log(info.results[0].geometry.location.lat);
-    	console.log(info.results[0].geometry.location.lng);
-  	}
-}
-
-getCoordinates('masonic temple detroit')
-
-// Mark: Request POST to another node.js server
-
-// const options = {
-//    url: '...',
-//    method: 'POST',
-//    body: '${data}'
+// function getCoordinates(location) {
+// 	return new Promise(function(resolve, reject){
+// 		var query = 'https://maps.googleapis.com/maps/api/place/textsearch/json?query=' + location + '&key=AIzaSyAGgyJhfn84IWt7Dxhjn4F3PQaW_9KrAwg'
+// 		request(query, function handleApiLocationSearchResult(error, response, body) {
+// 			if(error) {
+// 				return reject(error);
+// 			}
+// 			if (response.statusCode == 200) {
+// 				var info = JSON.parse(body);
+// 				var lat = info.results[0].geometry.location.lat;
+// 				var lon = info.results[0].geometry.location.lng;
+// 				resolve({
+// 					lat: lat,
+// 					lon: lon
+// 				});
+// 			}
+// 		});
+// 	});
 // }
 
-// request.post('localhost:3000', function optionalCallback(err, httpResponse, body) {
-// 	if (err) {
-// 		console.log('error')
-// 	}
-//  })
+function getCoordinates(location) {
+	var query = 'https://maps.googleapis.com/maps/api/place/textsearch/json?query=' + location + '&key=AIzaSyAGgyJhfn84IWt7Dxhjn4F3PQaW_9KrAwg'
+	return fetch(query)
+	.then(function(res) {
+		return res.json();
+	}).then(function(json) {
+		var results = json.results;
+		// getting stuff
+		// why console.log(json) generate weird stuff
+		return [
+			results[0].geometry.location.lat,
+			results[0].geometry.location.lng
+		];
+	});	
+}
 
+// getCoordinates('')
 
-app.post('/ajax/testPost', function(req, res){
-	res.send({success: true});
-});
+function postResults(results){
+	return new Promise(function(resolve, reject){
+		var options = { 
+			method: 'POST',
+			url: 'http://66.228.42.210:4994/directions/',
+			headers: {
+				'postman-token': '6b53859c-8aac-461f-612a-3f96b7c30243',
+				'cache-control': 'no-cache',
+				'content-type': 'application/x-www-form-urlencoded'
+			},
+			form: {
+				start: results[0],
+				end: results[1]
+			} 
+		};
 
-fetch('http://localhost:3000/ajax/testPost', { method: 'POST', body: {test: 'test'} })
-    .then(function(res) {
-        return res.json();
-    })
-    .then(function(json) {
-        console.log(json);
-    })
-    .catch(console.log);
+		request(options, function (error, response, body) {
+			if (error) return reject(error);
+			console.log(body);
+			resolve(body);
+		});
+	});
+}
+
+Promise.all([
+	getCoordinates('masonic temple detroit'),
+	getCoordinates('cass technical high school detroit')
+	])
+.then(postResults)
+.then(function(result){
+	console.log('data posted! response:', result);
+})
+.catch(console.log);
 
 // Mark: Init the server
 
 app.listen(3000, function() {
-  console.log('Node app is running on port', 3000);
+	console.log('Node app is running on port', 3000);
 });
