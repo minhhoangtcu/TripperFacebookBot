@@ -105,7 +105,7 @@ function postResults(results){
 	});
 }
 
-function getPeople(text) {
+function getPeople(senderID, text) {
 	// ASSUMES that text is "get me a friend from X to Y"
 	text = text.toLowerCase();
 	text = text.replace('get me a friend from', '');
@@ -121,7 +121,7 @@ function getPeople(text) {
 	])
 	.then(postResults)
 	.then(function(result){
-		// console.log('data posted! response:' + result);
+		sendGenericMessage(senderID, JSON.parse(result))
 	})
 	.catch(console.log);
 }
@@ -387,7 +387,7 @@ function receivedMessage(event) {
       	break;
 
       default:
-        getPeople(messageText)
+        getPeople(senderID, messageText)
         break;
     }
   } else if (messageAttachments) {
@@ -648,11 +648,25 @@ function sendButtonMessage(recipientId) {
   callSendAPI(messageData);
 }
 
+
+
+
+
+
+
+
+
+
+
 /*
- * Send a Structured Message (Generic Message type) using the Send API.
+ * Send a person for the trip
  *
  */
-function sendGenericMessage(recipientId) {
+function sendGenericMessage(recipientId, matchingPeople) {
+
+  var numberOfMatches = matchingPeople.length;
+  var name = matchingPeople[0].name
+
   var messageData = {
     recipient: {
       id: recipientId
@@ -663,18 +677,14 @@ function sendGenericMessage(recipientId) {
         payload: {
           template_type: "generic",
           elements: [{
-            title: "rift",
-            subtitle: "Next-generation virtual reality",
-            item_url: "https://www.oculus.com/en-us/rift/",               
+            title: "We found " + numberOfMatches + " matches!",
+            subtitle: name + " is your the best match! Go to our website to find out more!",
+            item_url: "https://stuff/",               
             image_url: SERVER_URL + "/assets/rift.png",
             buttons: [{
               type: "web_url",
               url: "https://www.oculus.com/en-us/rift/",
               title: "Open Web URL"
-            }, {
-              type: "postback",
-              title: "Call Postback",
-              payload: "Payload for first bubble",
             }],
           }, {
             title: "touch",
@@ -698,6 +708,16 @@ function sendGenericMessage(recipientId) {
 
   callSendAPI(messageData);
 }
+
+
+
+
+
+
+
+
+
+
 
 /*
  * Send a receipt message using the Send API.
