@@ -28,7 +28,7 @@ var app = express();
 // }
 
 function getCoordinates(location) {
-	var query = 'https://maps.googleapis.com/maps/api/place/textsearch/json?query=' + location + '&key=AIzaSyAGgyJhfn84IWt7Dxhjn4F3PQaW_9KrAwg'
+	var query = 'https://maps.googleapis.com/maps/api/place/textsearch/json?query=' + location + '&key=AIzaSyDRtomspJIjIxyoiS0rU8ZIwq2CPOUDjKE';
 	return fetch(query)
 	.then(function(res) {
 		return res.json();
@@ -36,6 +36,7 @@ function getCoordinates(location) {
 		var results = json.results;
 		// getting stuff
 		// why console.log(json) generate weird stuff
+
 		return [
 			results[0].geometry.location.lat,
 			results[0].geometry.location.lng
@@ -47,7 +48,7 @@ function postResults(results){
 	return new Promise(function(resolve, reject){
 		var options = { 
 			method: 'POST',
-			url: 'http://66.228.42.210:4994/directions/',
+			url: 'http://localhost:4994/directions/',
 			headers: {
 				'postman-token': '6b53859c-8aac-461f-612a-3f96b7c30243',
 				'cache-control': 'no-cache',

@@ -20,6 +20,9 @@ const
   fetch = require('node-fetch'),
   Promise = require('bluebird');
 
+const urlToWebServer = 'http://66.228.42.210:4994/directions/'
+// const urlToWebServer = 'http://localhost:4994/directions/'
+
 var app = express();
 app.set('port', process.env.PORT || 5000);
 app.set('view engine', 'ejs');
@@ -70,8 +73,7 @@ function getCoordinates(location) {
 		return res.json();
 	}).then(function(json) {
 		var results = json.results;
-		// getting stuff
-		// why console.log(json) generate weird stuff
+		console.log(json)
 		return [
 			results[0].geometry.location.lat,
 			results[0].geometry.location.lng
@@ -83,7 +85,7 @@ function postResults(results){
 	return new Promise(function(resolve, reject){
 		var options = { 
 			method: 'POST',
-			url: 'http://66.228.42.210:4994/directions/',
+			url: urlToWebServer,
 			headers: {
 				'postman-token': '6b53859c-8aac-461f-612a-3f96b7c30243',
 				'cache-control': 'no-cache',
@@ -103,18 +105,23 @@ function postResults(results){
 	});
 }
 
-Promise.all([
-	getCoordinates('masonic temple detroit'),
-	getCoordinates('cass technical high school detroit')
-	])
-.then(postResults)
-.then(function(result){
-	console.log('data posted! response:', result);
-})
-.catch(console.log);
-
-
 function getPeople(text) {
+	// ASSUMES that text is "get me a friend from X to Y"
+	text = text.toLowerCase();
+	text = text.replace('get me a friend from', '');
+	var split = text.split(' to ');
+	var from = split[0];
+	var to = split[1];
+
+	Promise.all([
+		getCoordinates(from),
+		getCoordinates(to)
+	])
+	.then(postResults)
+	.then(function(result){
+		console.log('data posted! response:', result);
+	})
+	.catch(console.log);
 	sendTextMessage('received text')
 }
 
@@ -379,6 +386,7 @@ function receivedMessage(event) {
       	break;
 
       default:
+      	console.log(messageText)
         getPeople(messageText)
         break;
     }
