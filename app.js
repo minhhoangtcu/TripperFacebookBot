@@ -73,7 +73,7 @@ function getCoordinates(location) {
 		return res.json();
 	}).then(function(json) {
 		var results = json.results;
-		console.log(json)
+		// console.log(json)
 		return [
 			results[0].geometry.location.lat,
 			results[0].geometry.location.lng
@@ -99,7 +99,7 @@ function postResults(results){
 
 		request(options, function (error, response, body) {
 			if (error) return reject(error);
-			console.log(body);
+			// console.log(body);
 			resolve(body);
 		});
 	});
@@ -112,6 +112,8 @@ function getPeople(text) {
 	var split = text.split(' to ');
 	var from = split[0];
 	var to = split[1];
+	console.log(from);
+	console.log(to);
 
 	Promise.all([
 		getCoordinates(from),
@@ -119,7 +121,7 @@ function getPeople(text) {
 	])
 	.then(postResults)
 	.then(function(result){
-		console.log('data posted! response:' + result);
+		// console.log('data posted! response:' + result);
 	})
 	.catch(console.log);
 }
