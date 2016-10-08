@@ -67,7 +67,7 @@ if (!(APP_SECRET && VALIDATION_TOKEN && PAGE_ACCESS_TOKEN && SERVER_URL)) {
  *
 */
 function getCoordinates(location) {
-	var query = 'https://maps.googleapis.com/maps/api/place/textsearch/json?query=' + location + '&key=AIzaSyAGgyJhfn84IWt7Dxhjn4F3PQaW_9KrAwg'
+	var query = 'https://maps.googleapis.com/maps/api/place/textsearch/json?query=' + location + '&key=AIzaSyAZXJSN3Xu-grZRB3pTq-wKkSi3GYzzpBg'
 	return fetch(query)
 	.then(function(res) {
 		return res.json();
