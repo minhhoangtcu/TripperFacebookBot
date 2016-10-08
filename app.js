@@ -119,10 +119,9 @@ function getPeople(text) {
 	])
 	.then(postResults)
 	.then(function(result){
-		console.log('data posted! response:', result);
+		sendTextMessage('data posted! response:' + result);
 	})
 	.catch(console.log);
-	sendTextMessage('received text')
 }
 
 
@@ -387,7 +386,6 @@ function receivedMessage(event) {
 
       default:
       	sendTextMessage(senderID, 'Default string entered')
-      	console.log(messageText)
         getPeople(messageText)
         break;
     }
