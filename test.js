@@ -44,11 +44,14 @@ function getCoordinates(location) {
 	});	
 }
 
+const urlToWebServer = 'http://66.228.42.210:4994/directions/'
+// const urlToWebServer = 'http://localhost:4994/directions/'
+
 function postResults(results){
 	return new Promise(function(resolve, reject){
 		var options = { 
 			method: 'POST',
-			url: 'http://localhost:4994/directions/',
+			url: urlToWebServer,
 			headers: {
 				'postman-token': '6b53859c-8aac-461f-612a-3f96b7c30243',
 				'cache-control': 'no-cache',

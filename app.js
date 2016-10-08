@@ -386,6 +386,7 @@ function receivedMessage(event) {
       	break;
 
       default:
+      	sendTextMessage(senderID, 'Default string entered')
       	console.log(messageText)
         getPeople(messageText)
         break;
