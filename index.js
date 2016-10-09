@@ -118,29 +118,27 @@ function postResults(results){
 function getPeople(senderID, text) {
 	// ASSUMES that text is "get me a friend from X to Y"
 	text = text.toLowerCase();
-	text = text.replace('get me a friend from', '');
-	var split = text.split(' to ');
-	var from = split[0];
-	var to = split[1];
-	// console.log(from);
-	// console.log(to);
 
-  client.message('what is the weather in London?', {})
+  client.message(text, {})
   .then((data) => {
-  console.log('Yay, got Wit.ai response: ' + JSON.stringify(data));
+    console.log('Yay, got Wit.ai response: ' + JSON.stringify(data));
+    getPeopleFromCoordinates(0, 0);
   })
   .catch(console.error);
 
-	Promise.all([
-		getCoordinates(from),
-		getCoordinates(to)
-	])
-	.then(postResults)
-	.then(function(result){
-		console.log('Finished POST request to server')
-		sendGenericMessage(senderID, JSON.parse(result).matching)
-	})
-	.catch(console.log);
+}
+
+function getPeopleFromCoordinates(from, to) {
+  Promise.all([
+    getCoordinates(from),
+    getCoordinates(to)
+    ])
+  .then(postResults)
+  .then(function(result){
+    console.log('Finished POST request to server')
+    sendGenericMessage(senderID, JSON.parse(result).matching)
+  })
+  .catch(console.log);
 }
 
 
