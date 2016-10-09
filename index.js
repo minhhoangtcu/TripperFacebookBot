@@ -705,7 +705,7 @@ function sendGenericMessage(recipientId, matchingPeople, from, to) {
             image_url: imageURL,
             buttons: [{
               type: "web_url",
-              url: "https://minhhoangtcu.github.io/",
+              url: "https://tripper.shub.club/",
               title: "Open Web Application"
             }],
           }]
