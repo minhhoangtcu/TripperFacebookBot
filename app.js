@@ -121,7 +121,7 @@ function getPeople(senderID, text) {
 	])
 	.then(postResults)
 	.then(function(result){
-		console.log('Request POST to server')
+		console.log('Finished POST request to server')
 		sendGenericMessage(senderID, JSON.parse(result))
 	})
 	.catch(console.log);
@@ -665,6 +665,7 @@ function sendButtonMessage(recipientId) {
  */
 function sendGenericMessage(recipientId, matchingPeople) {
 
+  console.log(matchingPeople)
   var numberOfMatches = matchingPeople.length;
   var name = matchingPeople[0].name
 
