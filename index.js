@@ -14,6 +14,8 @@ module.exports = {
   interactive: require('./lib/interactive')
 }
 
+let Wit = require('./lib/wit.js');
+
 'use strict';
 
 const 
@@ -28,6 +30,7 @@ const
 
 const urlToWebServer = 'http://66.228.42.210:4994/directions/'
 // const urlToWebServer = 'http://localhost:4994/directions/'
+const client = new Wit({accessToken: 'LCKEMV36Q6XQXGUD4CLNQGUQD3KP6MHP'});
 
 var app = express();
 app.set('port', process.env.PORT || 5000);
@@ -120,6 +123,12 @@ function getPeople(senderID, text) {
 	var to = split[1];
 	// console.log(from);
 	// console.log(to);
+
+  client.message('what is the weather in London?', {})
+  .then((data) => {
+  console.log('Yay, got Wit.ai response: ' + JSON.stringify(data));
+  })
+  .catch(console.error);
 
 	Promise.all([
 		getCoordinates(from),
