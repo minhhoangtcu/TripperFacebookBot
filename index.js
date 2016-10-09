@@ -705,7 +705,7 @@ function sendGenericMessage(recipientId, matchingPeople, from, to) {
           template_type: "generic",
           elements: [{
             title: "We found " + numberOfMatches + " matches!",
-            subtitle: name + " is your the best match for your trip from ${from} to ${to} Go to our website to find out more!",
+            subtitle: name + " is your the best match for your trip from " + from + "to " + to + ". Go to our website to find out more!",
             item_url: "https://minhhoangtcu.github.io/",               
             image_url: imageURL,
             buttons: [{
