@@ -112,8 +112,8 @@ function getPeople(senderID, text) {
 	var split = text.split(' to ');
 	var from = split[0];
 	var to = split[1];
-	console.log(from);
-	console.log(to);
+	// console.log(from);
+	// console.log(to);
 
 	Promise.all([
 		getCoordinates(from),
@@ -668,6 +668,7 @@ function sendGenericMessage(recipientId, matchingPeople) {
   //console.log(matchingPeople)
   var numberOfMatches = matchingPeople.length;
   var name = matchingPeople[0].name
+  var imageURL = matchingPeople[0].picture
   console.log(name)
 
   var messageData = {
@@ -682,27 +683,13 @@ function sendGenericMessage(recipientId, matchingPeople) {
           elements: [{
             title: "We found " + numberOfMatches + " matches!",
             subtitle: name + " is your the best match! Go to our website to find out more!",
-            item_url: "https://petersfancybrownhats.com",               
-            image_url: SERVER_URL + "/assets/rift.png",
+            item_url: "https://minhhoangtcu.github.io/",               
+            image_url: imageURL,
             buttons: [{
               type: "web_url",
-              url: "https://www.oculus.com/en-us/rift/",
-              title: "Open Web URL"
+              url: "https://minhhoangtcu.github.io/",
+              title: "Open Web Application"
             }],
-          }, {
-            title: "touch",
-            subtitle: "Your Hands, Now in VR",
-            item_url: "https://www.oculus.com/en-us/touch/",               
-            image_url: SERVER_URL + "/assets/touch.png",
-            buttons: [{
-              type: "web_url",
-              url: "https://www.oculus.com/en-us/touch/",
-              title: "Open Web URL"
-            }, {
-              type: "postback",
-              title: "Call Postback",
-              payload: "Payload for second bubble",
-            }]
           }]
         }
       }
