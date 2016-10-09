@@ -688,6 +688,7 @@ function sendGenericMessage(recipientId, matchingPeople, from, to) {
   var numberOfMatches = matchingPeople.length;
   console.log(numberOfMatches)
   var randomIndex = Math.random() * numberOfMatches;
+  console.log(randomIndex)
 
   var name = matchingPeople[randomIndex].name
   var imageURL = matchingPeople[randomIndex].picture
