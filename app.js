@@ -665,9 +665,10 @@ function sendButtonMessage(recipientId) {
  */
 function sendGenericMessage(recipientId, matchingPeople) {
 
-  console.log(matchingPeople)
+  //console.log(matchingPeople)
   var numberOfMatches = matchingPeople.length;
   var name = matchingPeople[0].name
+  console.log(name)
 
   var messageData = {
     recipient: {
