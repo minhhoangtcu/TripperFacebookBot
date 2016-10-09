@@ -355,7 +355,7 @@ function receivedMessage(event) {
       // switch on default commands
       switch (data._text) {
         case 'help':
-          sendTextMessage(senderID, "Here is the list of commands:\n1. help: show all commands");
+          sendTextMessage(senderID, "Here is the list of commands:\n1. help: show all commands\n2. from: place1 to: place2: I will find people who share the same route");
           break;
         case 'test tripper':
           sendTextMessage(senderID, "Successfully transfered data back!");
@@ -367,12 +367,25 @@ function receivedMessage(event) {
       // console.log('2.' + data.entities.intent[0].value)
       switch (data.entities.intent[0].value) {
         case 'travel':
-          console.log('abc')
           getPeople(senderID, messageText)
+
+          // Find people traveling from around me to Detroit on 7th of October
+          if (data.entities.location[1].value == 'detroit') {
+            sendTextMessage(senderID, "Hey! We found 7 people near you who are going on the same route!\n" +
+              "1. Marry (3 miles away)\n" +
+              "2. Tom (5 miles away)\n" +
+              "3. Long (5 miles away)\n" +
+              "Please enter the app for more details");
+          }
+
           break;
         case 'greating':
-          sendTextMessage(senderID, "Hi, Tripper Bot here!");
+          sendTextMessage(senderID, "Hi, Tripper Bot here!")
           sendTextMessage(senderID, "You can ask me simple questions, or just type 'help' for a list of avaiable commands!");
+          break;
+
+        case 'farewell':
+          sendTextMessage(senderID, "Come back soon <3")
           break;
       }
 
@@ -689,7 +702,6 @@ function sendGenericMessage(recipientId, matchingPeople, from, to) {
           elements: [{
             title: "We found " + numberOfMatches + " matches!",
             subtitle: name + " is your the best match for your trip from " + from + " to " + to + ". Go to our website to find out more!",
-            item_url: "https://minhhoangtcu.github.io/",               
             image_url: imageURL,
             buttons: [{
               type: "web_url",
