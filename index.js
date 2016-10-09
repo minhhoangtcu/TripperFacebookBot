@@ -121,8 +121,12 @@ function getPeople(senderID, text) {
 
   client.message(text, {})
   .then((data) => {
-    console.log('Yay, got Wit.ai response: ' + JSON.stringify(data));
-    getPeopleFromCoordinates(0, 0);
+    // console.log('Yay, got Wit.ai response: ' + JSON.stringify(data));
+    var from = JSON.stringify(data).entities.location[0].value;
+    var to = JSON.stringify(data).entities.location[1].value;
+    console.log(from)
+    console.log(to)
+    getPeopleFromCoordinates(from, to);
   })
   .catch(console.error);
 
@@ -135,7 +139,7 @@ function getPeopleFromCoordinates(from, to) {
     ])
   .then(postResults)
   .then(function(result){
-    console.log('Finished POST request to server')
+    // console.log('Finished POST request to server')
     sendGenericMessage(senderID, JSON.parse(result).matching)
   })
   .catch(console.log);
