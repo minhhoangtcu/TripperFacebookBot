@@ -116,17 +116,12 @@ function postResults(results){
 }
 
 function getPeople(senderID, text) {
-	// ASSUMES that text is "get me a friend from X to Y"
 	text = text.toLowerCase();
 
   client.message(text, {})
   .then((data) => {
-    // console.log('Yay, got Wit.ai response: ' + JSON.stringify(data));
-    // console.log(JSON.stringify(data))
     var from = data.entities.location[0].value;
     var to = data.entities.location[1].value;
-    // console.log(from)
-    // console.log(to)
     getPeopleFromCoordinates(senderID, from, to);
   })
   .catch(console.error);
