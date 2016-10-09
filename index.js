@@ -684,8 +684,9 @@ function sendButtonMessage(recipientId) {
  */
 function sendGenericMessage(recipientId, matchingPeople, from, to) {
 
-  //console.log(matchingPeople)
+  console.log(matchingPeople)
   var numberOfMatches = matchingPeople.length;
+  console.log(numberOfMatches)
   var randomIndex = Math.random() * numberOfMatches;
 
   var name = matchingPeople[randomIndex].name
