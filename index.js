@@ -26,11 +26,13 @@ const
   fetch = require('node-fetch'),
   Promise = require('bluebird');
 
+var Wit = require('./lib/wit.js');
+
 const urlToWebServer = 'http://66.228.42.210:4994/directions/'
 // const urlToWebServer = 'http://localhost:4994/directions/'
 const client = new Wit({accessToken: 'LCKEMV36Q6XQXGUD4CLNQGUQD3KP6MHP'});
 
-var Wit = require('./lib/wit.js');
+
 var app = express();
 app.set('port', process.env.PORT || 5000);
 app.set('view engine', 'ejs');
