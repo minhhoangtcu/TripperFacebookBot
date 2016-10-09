@@ -125,15 +125,15 @@ function getPeople(senderID, text) {
     // console.log(JSON.stringify(data))
     var from = data.entities.location[0].value;
     var to = data.entities.location[1].value;
-    console.log(from)
-    console.log(to)
-    getPeopleFromCoordinates(from, to);
+    // console.log(from)
+    // console.log(to)
+    getPeopleFromCoordinates(senderID, from, to);
   })
   .catch(console.error);
 
 }
 
-function getPeopleFromCoordinates(from, to) {
+function getPeopleFromCoordinates(senderID, from, to) {
   Promise.all([
     getCoordinates(from),
     getCoordinates(to)
