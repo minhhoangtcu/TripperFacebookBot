@@ -34,9 +34,7 @@ function getCoordinates(location) {
 		return res.json();
 	}).then(function(json) {
 		var results = json.results;
-		// getting stuff
-		// why console.log(json) generate weird stuff
-
+		
 		return [
 			results[0].geometry.location.lat,
 			results[0].geometry.location.lng
@@ -65,6 +63,7 @@ function postResults(results){
 
 		request(options, function (error, response, body) {
 			if (error) return reject(error);
+			console.log('Request POST to server')
 			resolve(body);
 		});
 	});
@@ -76,7 +75,7 @@ Promise.all([
 	])
 .then(postResults)
 .then(function(result){
-	console.log('data posted! response:', JSON.parse(result).matching);
+	console.log('Post request finished!')
 })
 .catch(console.log);
 

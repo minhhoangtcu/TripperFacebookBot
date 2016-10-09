@@ -73,7 +73,7 @@ function getCoordinates(location) {
 		return res.json();
 	}).then(function(json) {
 		var results = json.results;
-		console.log(results)
+		
 		return [
 			results[0].geometry.location.lat,
 			results[0].geometry.location.lng
@@ -99,7 +99,7 @@ function postResults(results){
 
 		request(options, function (error, response, body) {
 			if (error) return reject(error);
-			// console.log(body);
+			console.log('Request POST to server')
 			resolve(body);
 		});
 	});
@@ -121,6 +121,7 @@ function getPeople(senderID, text) {
 	])
 	.then(postResults)
 	.then(function(result){
+		console.log('Request POST to server')
 		sendGenericMessage(senderID, JSON.parse(result))
 	})
 	.catch(console.log);
