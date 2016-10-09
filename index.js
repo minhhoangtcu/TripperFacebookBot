@@ -14,7 +14,7 @@ module.exports = {
   interactive: require('./lib/interactive')
 }
 
-let Wit = require('./lib/wit.js');
+var Wit = require('./lib/wit.js');
 
 'use strict';
 
