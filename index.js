@@ -350,60 +350,9 @@ function receivedMessage(event) {
     // keywords and send back the corresponding example. Otherwise, just echo
     // the text we received.
     switch (messageText) {
-      case 'image':
-        sendImageMessage(senderID);
-        break;
 
-      case 'gif':
-        sendGifMessage(senderID);
-        break;
-
-      case 'audio':
-        sendAudioMessage(senderID);
-        break;
-
-      case 'video':
-        sendVideoMessage(senderID);
-        break;
-
-      case 'file':
-        sendFileMessage(senderID);
-        break;
-
-      case 'button':
-        sendButtonMessage(senderID);
-        break;
-
-      case 'generic':
-        sendGenericMessage(senderID);
-        break;
-
-      case 'receipt':
-        sendReceiptMessage(senderID);
-        break;
-
-      case 'quick reply':
-        sendQuickReply(senderID);
-        break;        
-
-      case 'read receipt':
-        sendReadReceipt(senderID);
-        break;        
-
-      case 'typing on':
-        sendTypingOn(senderID);
-        break;        
-
-      case 'typing off':
-        sendTypingOff(senderID);
-        break;        
-
-      case 'account linking':
-        sendAccountLinking(senderID);
-        break;
-
-      case 'hello':
-      	sendTextMessage(senderID, 'Hello')
+      case 'test tripper':
+      	sendTextMessage(senderID, 'Successfully transfered data back!')
       	break;
 
       default:
@@ -705,7 +654,7 @@ function sendGenericMessage(recipientId, matchingPeople, from, to) {
           template_type: "generic",
           elements: [{
             title: "We found " + numberOfMatches + " matches!",
-            subtitle: name + " is your the best match for your trip from " + from + "to " + to + ". Go to our website to find out more!",
+            subtitle: name + " is your the best match for your trip from " + from + " to " + to + ". Go to our website to find out more!",
             item_url: "https://minhhoangtcu.github.io/",               
             image_url: imageURL,
             buttons: [{
