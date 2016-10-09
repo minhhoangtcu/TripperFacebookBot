@@ -682,7 +682,7 @@ function sendGenericMessage(recipientId, matchingPeople) {
           elements: [{
             title: "We found " + numberOfMatches + " matches!",
             subtitle: name + " is your the best match! Go to our website to find out more!",
-            item_url: "https://stuff/",               
+            item_url: "https://petersfancybrownhats.com",               
             image_url: SERVER_URL + "/assets/rift.png",
             buttons: [{
               type: "web_url",
