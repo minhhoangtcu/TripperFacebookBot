@@ -122,7 +122,7 @@ function getPeople(senderID, text) {
 	.then(postResults)
 	.then(function(result){
 		console.log('Finished POST request to server')
-		sendGenericMessage(senderID, JSON.parse(result))
+		sendGenericMessage(senderID, JSON.parse(result).matching)
 	})
 	.catch(console.log);
 }
