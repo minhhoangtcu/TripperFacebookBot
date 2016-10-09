@@ -77,7 +77,7 @@ if (!(APP_SECRET && VALIDATION_TOKEN && PAGE_ACCESS_TOKEN && SERVER_URL)) {
  *
 */
 function getCoordinates(location) {
-	var query = 'https://maps.googleapis.com/maps/api/place/textsearch/json?query=${location}&key=AIzaSyAZXJSN3Xu-grZRB3pTq-wKkSi3GYzzpBg'
+	var query = 'https://maps.googleapis.com/maps/api/place/textsearch/json?query=${location}&key=AIzaSyCzQZ1OUyJG8G82GkY-IAOyY60NPrc6Y24'
 	return fetch(query)
 	.then(function(res) {
 		return res.json();
@@ -92,6 +92,7 @@ function getCoordinates(location) {
 }
 
 function postResults(results){
+  
 	return new Promise(function(resolve, reject){
 		var options = { 
 			method: 'POST',
@@ -102,14 +103,16 @@ function postResults(results){
 				'content-type': 'application/x-www-form-urlencoded'
 			},
 			form: {
-				start: results[0],
-				end: results[1]
+				start: JSON.stringify({data:results[0]}),
+				end: JSON.stringify({data:results[1]})
 			} 
 		};
 
 		request(options, function (error, response, body) {
 			if (error) return reject(error);
 			console.log('Request POST to server')
+      console.log('RESPONSE >>>>>' + response)
+      console.log('BODY >>>>>' + body)
 			resolve(body);
 		});
 	});
@@ -136,6 +139,9 @@ function getPeopleFromCoordinates(senderID, from, to) {
   .then(postResults)
   .then(function(result){
     // console.log('Finished POST request to server')
+    console.log('>>>>>>>>' + result)
+
+
     sendGenericMessage(senderID, result.matching, from, to)
   })
   .catch(console.log);
