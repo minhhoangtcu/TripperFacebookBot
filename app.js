@@ -20,6 +20,8 @@ const
   fetch = require('node-fetch'),
   Promise = require('bluebird');
 
+ 
+
 const urlToWebServer = 'http://66.228.42.210:4994/directions/'
 // const urlToWebServer = 'http://localhost:4994/directions/'
 
@@ -67,7 +69,7 @@ if (!(APP_SECRET && VALIDATION_TOKEN && PAGE_ACCESS_TOKEN && SERVER_URL)) {
  *
 */
 function getCoordinates(location) {
-	var query = 'https://maps.googleapis.com/maps/api/place/textsearch/json?query=' + location + '&key=AIzaSyAZXJSN3Xu-grZRB3pTq-wKkSi3GYzzpBg'
+	var query = 'https://maps.googleapis.com/maps/api/place/textsearch/json?query=${location}&key=AIzaSyAZXJSN3Xu-grZRB3pTq-wKkSi3GYzzpBg'
 	return fetch(query)
 	.then(function(res) {
 		return res.json();
