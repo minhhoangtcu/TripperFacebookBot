@@ -24,8 +24,7 @@ const
   https = require('https'),  
   request = require('request'),
   fetch = require('node-fetch'),
-  Promise = require('bluebird');const bodyParser = require('body-parser');
- 
+  Promise = require('bluebird');
 
 const urlToWebServer = 'http://66.228.42.210:4994/directions/'
 // const urlToWebServer = 'http://localhost:4994/directions/'
