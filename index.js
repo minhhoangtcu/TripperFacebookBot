@@ -141,7 +141,7 @@ function getPeopleFromCoordinates(senderID, from, to) {
   .then(postResults)
   .then(function(result){
     // console.log('Finished POST request to server')
-    sendGenericMessage(senderID, JSON.parse(result).matching)
+    sendGenericMessage(senderID, JSON.parse(result).matching, from, to)
   })
   .catch(console.log);
 }
@@ -682,13 +682,15 @@ function sendButtonMessage(recipientId) {
  * Send a person for the trip
  *
  */
-function sendGenericMessage(recipientId, matchingPeople) {
+function sendGenericMessage(recipientId, matchingPeople, from, to) {
 
   //console.log(matchingPeople)
   var numberOfMatches = matchingPeople.length;
-  var name = matchingPeople[0].name
-  var imageURL = matchingPeople[0].picture
-  console.log(name)
+  var randomIndex = Math.random() * numberOfMatches;
+
+  var name = matchingPeople[randomIndex].name
+  var imageURL = matchingPeople[randomIndex].picture
+  // console.log(name)
 
   var messageData = {
     recipient: {
@@ -701,7 +703,7 @@ function sendGenericMessage(recipientId, matchingPeople) {
           template_type: "generic",
           elements: [{
             title: "We found " + numberOfMatches + " matches!",
-            subtitle: name + " is your the best match! Go to our website to find out more!",
+            subtitle: name + " is your the best match for your trip from ${from} to ${to} Go to our website to find out more!",
             item_url: "https://minhhoangtcu.github.io/",               
             image_url: imageURL,
             buttons: [{
