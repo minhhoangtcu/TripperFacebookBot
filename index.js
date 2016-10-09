@@ -346,19 +346,53 @@ function receivedMessage(event) {
 
   if (messageText) {
 
+    messageText = messageText.toLowerCase();
+
+    client.message(messageText, {})
+    .then((data) => {
+      console.log('Yay, got Wit.ai response: ' + JSON.stringify(data));
+
+      // switch on default commands
+      switch (data._text) {
+        case 'help':
+          sendTextMessage(senderID, "Here is the list of commands:\n1. help: show all commands");
+          break;
+        case 'test tripper':
+          sendTextMessage(senderID, "Successfully transfered data back!");
+          break;
+      }
+
+      // switch on type of intent
+      // console.log('1.' + data.entities.intent)
+      // console.log('2.' + data.entities.intent[0].value)
+      switch (data.entities.intent[0].value) {
+        case 'travel':
+          console.log('abc')
+          getPeople(senderID, messageText)
+          break;
+        case 'greating':
+          sendTextMessage(senderID, "Hi, Tripper Bot here!");
+          sendTextMessage(senderID, "You can ask me simple questions, or just type 'help' for a list of avaiable commands!");
+          break;
+      }
+
+
+    })
+    .catch(console.error);
+
     // If we receive a text message, check to see if it matches any special
     // keywords and send back the corresponding example. Otherwise, just echo
     // the text we received.
-    switch (messageText) {
+    // switch (messageText) {
+    //   case 'test tripper':
+    //   	sendTextMessage(senderID, 'Successfully transfered data back!')
+    //   	break;
 
-      case 'test tripper':
-      	sendTextMessage(senderID, 'Successfully transfered data back!')
-      	break;
+    //   default:
+    //     getPeople(senderID, messageText)
+    //     break;
+    // }
 
-      default:
-        getPeople(senderID, messageText)
-        break;
-    }
   } else if (messageAttachments) {
     sendTextMessage(senderID, "Message with attachment received");
   }
