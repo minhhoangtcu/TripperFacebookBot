@@ -684,11 +684,11 @@ function sendButtonMessage(recipientId) {
  */
 function sendGenericMessage(recipientId, matchingPeople, from, to) {
 
-  console.log(matchingPeople)
+  // console.log(matchingPeople)
   var numberOfMatches = matchingPeople.length;
-  console.log(numberOfMatches)
-  var randomIndex = Math.random() * numberOfMatches;
-  console.log(randomIndex)
+  // console.log(numberOfMatches)
+  var randomIndex = Math.floor(Math.random() * numberOfMatches);
+  // console.log(randomIndex)
 
   var name = matchingPeople[randomIndex].name
   var imageURL = matchingPeople[randomIndex].picture
