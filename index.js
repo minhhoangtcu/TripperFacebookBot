@@ -136,7 +136,7 @@ function getPeopleFromCoordinates(senderID, from, to) {
   .then(postResults)
   .then(function(result){
     // console.log('Finished POST request to server')
-    sendGenericMessage(senderID, JSON.parse(result).matching, from, to)
+    sendGenericMessage(senderID, result.matching, from, to)
   })
   .catch(console.log);
 }
