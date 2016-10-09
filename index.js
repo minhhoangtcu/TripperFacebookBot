@@ -122,7 +122,7 @@ function getPeople(senderID, text) {
   client.message(text, {})
   .then((data) => {
     // console.log('Yay, got Wit.ai response: ' + JSON.stringify(data));
-    console.log(JSON.stringify(data).entities.location)
+    console.log(JSON.stringify(data).entities)
     var from = JSON.stringify(data).entities.location[0].value;
     var to = JSON.stringify(data).entities.location[1].value;
     console.log(from)
