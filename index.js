@@ -8,6 +8,12 @@
  */
 
 /* jshint node: true, devel: true */
+module.exports = {
+  log: require('./lib/log'),
+  Wit: require('./lib/wit'),
+  interactive: require('./lib/interactive')
+}
+
 'use strict';
 
 const 
@@ -18,8 +24,7 @@ const
   https = require('https'),  
   request = require('request'),
   fetch = require('node-fetch'),
-  Promise = require('bluebird');
-
+  Promise = require('bluebird');const bodyParser = require('body-parser');
  
 
 const urlToWebServer = 'http://66.228.42.210:4994/directions/'
